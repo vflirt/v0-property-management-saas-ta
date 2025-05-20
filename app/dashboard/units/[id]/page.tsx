@@ -42,7 +42,7 @@ export default async function UnitPage({ params }: { params: { id: string } }) {
         </Button>
         <h1 className="text-3xl font-bold tracking-tight">Unit {unit.unitNumber}</h1>
         <Badge className="ml-2">{unit.type}</Badge>
-        <Badge variant={unit.status === "Occupied" ? "default" : "secondary"} className="ml-2">
+        <Badge variant={unit.status === "occupied" ? "default" : "secondary"} className="ml-2">
           {unit.status}
         </Badge>
       </div>
@@ -92,7 +92,7 @@ export default async function UnitPage({ params }: { params: { id: string } }) {
                   <div>
                     <p className="font-medium">Lease Information</p>
                     <p className="text-sm text-muted-foreground">${unit.rent}/month</p>
-                    {unit.status === "Occupied" && lease && (
+                    {unit.status === "occupied" && lease && (
                       <>
                         <p className="text-sm text-muted-foreground">
                           Lease ends: {new Date(lease.endDate).toLocaleDateString()}
@@ -106,7 +106,7 @@ export default async function UnitPage({ params }: { params: { id: string } }) {
                 </div>
               </div>
               <div className="space-y-4">
-                {unit.status === "Occupied" && tenant && (
+                {unit.status === "occupied" && tenant && (
                   <div className="flex items-start gap-2">
                     <User className="mt-0.5 h-4 w-4 text-muted-foreground" />
                     <div>
@@ -114,7 +114,7 @@ export default async function UnitPage({ params }: { params: { id: string } }) {
                       <div className="mt-1 flex items-center gap-2">
                         <Avatar className="h-6 w-6">
                           <AvatarImage src={tenant.avatar || "/placeholder.svg?height=40&width=40"} alt={tenant.name} />
-                          <AvatarFallback>{tenant.name.charAt(0)}</AvatarFallback>
+                          <AvatarFallback>{tenant.firstName.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <Link
                           href={`/dashboard/tenants/${tenant.id}`}
@@ -159,7 +159,7 @@ export default async function UnitPage({ params }: { params: { id: string } }) {
             <CardTitle>Quick Actions</CardTitle>
           </CardHeader>
           <CardContent className="p-4 pt-0 space-y-2">
-            {unit.status === "Occupied" ? (
+            {unit.status === "occupied" ? (
               <>
                 {property && (
                   <Button className="w-full" asChild>

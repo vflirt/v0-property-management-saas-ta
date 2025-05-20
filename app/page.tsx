@@ -105,7 +105,7 @@ export default function LandingPage() {
                   icon: Clock,
                 },
               ].map((feature, index) => (
-                <Card key={index} className="border-border/40 bg-background">
+                <Card key={index} className="bg-background">
                   <CardHeader>
                     <feature.icon className="h-10 w-10 text-primary mb-2" />
                     <CardTitle>{feature.title}</CardTitle>
@@ -140,7 +140,7 @@ export default function LandingPage() {
               <TabsContent value="monthly" className="mt-0">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   {/* Starter Plan */}
-                  <Card className="border-border/40">
+                  <Card className="flex flex-col">
                     <CardHeader>
                       <CardTitle>Starter</CardTitle>
                       <CardDescription>For small property owners</CardDescription>
@@ -149,7 +149,7 @@ export default function LandingPage() {
                         <span className="text-muted-foreground ml-2">/month</span>
                       </div>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-1">
                       <ul className="space-y-3">
                         {["Up to 5 properties", "Basic AI maintenance support", "Tenant portal", "Email support"].map(
                           (feature, i) => (
@@ -167,7 +167,7 @@ export default function LandingPage() {
                   </Card>
 
                   {/* Professional Plan */}
-                  <Card className="border-primary shadow-lg">
+                  <Card className="border-primary shadow-lg flex flex-col">
                     <CardHeader className="bg-primary text-primary-foreground rounded-t-lg">
                       <div className="py-1 px-3 bg-white text-primary text-xs font-semibold rounded-full w-fit mb-2">
                         MOST POPULAR
@@ -181,7 +181,7 @@ export default function LandingPage() {
                         <span className="text-primary-foreground/90 ml-2">/month</span>
                       </div>
                     </CardHeader>
-                    <CardContent className="pt-6">
+                    <CardContent className="pt-6 flex-1">
                       <ul className="space-y-3">
                         {[
                           "Up to 20 properties",
@@ -204,7 +204,7 @@ export default function LandingPage() {
                   </Card>
 
                   {/* Enterprise Plan */}
-                  <Card className="border-border/40">
+                  <Card className="flex flex-col">
                     <CardHeader>
                       <CardTitle>Enterprise</CardTitle>
                       <CardDescription>For large property portfolios</CardDescription>
@@ -213,7 +213,7 @@ export default function LandingPage() {
                         <span className="text-muted-foreground ml-2">/month</span>
                       </div>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-1">
                       <ul className="space-y-3">
                         {[
                           "Unlimited properties",
@@ -241,7 +241,7 @@ export default function LandingPage() {
               <TabsContent value="yearly" className="mt-0">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   {/* Starter Plan - Yearly */}
-                  <Card className="border-border/40">
+                  <Card className="flex flex-col">
                     <CardHeader>
                       <CardTitle>Starter</CardTitle>
                       <CardDescription>For small property owners</CardDescription>
@@ -251,7 +251,7 @@ export default function LandingPage() {
                       </div>
                       <p className="text-sm text-muted-foreground mt-2">Billed annually ($276)</p>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-1">
                       <ul className="space-y-3">
                         {["Up to 5 properties", "Basic AI maintenance support", "Tenant portal", "Email support"].map(
                           (feature, i) => (
@@ -269,7 +269,7 @@ export default function LandingPage() {
                   </Card>
 
                   {/* Professional Plan - Yearly */}
-                  <Card className="border-primary shadow-lg">
+                  <Card className="border-primary shadow-lg flex flex-col">
                     <CardHeader className="bg-primary text-primary-foreground rounded-t-lg">
                       <div className="py-1 px-3 bg-white text-primary text-xs font-semibold rounded-full w-fit mb-2">
                         MOST POPULAR
@@ -284,7 +284,7 @@ export default function LandingPage() {
                       </div>
                       <p className="text-sm text-primary-foreground/80 mt-2">Billed annually ($756)</p>
                     </CardHeader>
-                    <CardContent className="pt-6">
+                    <CardContent className="pt-6 flex-1">
                       <ul className="space-y-3">
                         {[
                           "Up to 20 properties",
@@ -307,7 +307,7 @@ export default function LandingPage() {
                   </Card>
 
                   {/* Enterprise Plan - Yearly */}
-                  <Card className="border-border/40">
+                  <Card className="flex flex-col">
                     <CardHeader>
                       <CardTitle>Enterprise</CardTitle>
                       <CardDescription>For large property portfolios</CardDescription>
@@ -317,7 +317,7 @@ export default function LandingPage() {
                       </div>
                       <p className="text-sm text-muted-foreground mt-2">Billed annually ($1,908)</p>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-1">
                       <ul className="space-y-3">
                         {[
                           "Unlimited properties",

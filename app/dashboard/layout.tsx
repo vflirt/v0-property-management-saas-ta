@@ -26,7 +26,7 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen flex-col w-full">
         <DashboardHeader user={mockUser} />
         <div className="flex flex-1">
           <DashboardSidebar role={role} />

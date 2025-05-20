@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { getLeaseById, getTenantById, getUnitById, getPropertyById } from "@/lib/data"
+import { getLeaseById, getTenantById, getUnitById, getPropertyById, getPaymentsByLease } from "@/lib/data"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 export const metadata: Metadata = {
   title: "Lease Details | Property Management",
@@ -28,43 +29,7 @@ export default async function LeasePage({ params }: { params: { id: string } }) 
   const property = unit && unit.propertyId ? await getPropertyById(unit.propertyId) : null
 
   // Sample payment history - in a real app, this would come from the database
-  const paymentHistory = [
-    {
-      id: "payment-1",
-      date: "2023-05-01",
-      amount: lease.rentAmount,
-      type: "Rent",
-      status: "Paid",
-    },
-    {
-      id: "payment-2",
-      date: "2023-04-01",
-      amount: lease.rentAmount,
-      type: "Rent",
-      status: "Paid",
-    },
-    {
-      id: "payment-3",
-      date: "2023-03-01",
-      amount: lease.rentAmount,
-      type: "Rent",
-      status: "Paid",
-    },
-    {
-      id: "payment-4",
-      date: "2023-02-01",
-      amount: lease.rentAmount,
-      type: "Rent",
-      status: "Paid",
-    },
-    {
-      id: "payment-5",
-      date: "2023-01-01",
-      amount: lease.rentAmount * 2,
-      type: "Rent + Security Deposit",
-      status: "Paid",
-    },
-  ]
+  const paymentHistory = await getPaymentsByLease(lease.id);
 
   // Sample lease clauses
   const leaseClauses = [
@@ -190,7 +155,7 @@ export default async function LeasePage({ params }: { params: { id: string } }) 
                 <div className="flex items-center gap-4">
                   <Avatar>
                     <AvatarImage src={tenant.avatar || "/placeholder.svg?height=40&width=40"} alt={tenant.name} />
-                    <AvatarFallback>{tenant.name.charAt(0)}</AvatarFallback>
+                    <AvatarFallback>{tenant.firstName.charAt(0)}</AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="text-sm font-medium">Name</p>
@@ -241,6 +206,54 @@ export default async function LeasePage({ params }: { params: { id: string } }) 
           </Card>
         </div>
       </div>
+      <div className="grid gap-4">
+       { paymentHistory && <Card>
+              <CardHeader className="p-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle>Payment History</CardTitle>
+                  <Button size="sm">Record Payment</Button>
+                </div>
+                <CardDescription>Payment history for Unit {unit.unitNumber}</CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Amount</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Method</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {
+                      paymentHistory.map((payment) => (
+                        <TableRow key={payment.id}>
+                          <TableCell>{new Date(payment.date).toLocaleDateString()}</TableCell>
+                          <TableCell>${payment.amount}</TableCell>
+                          <TableCell>{payment.type}</TableCell>
+                          <TableCell>
+                            <Badge variant={payment.status === "Paid" ? "default" : "destructive"}>
+                              {payment.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{payment.method}</TableCell>
+                          <TableCell className="text-right">
+                            <Button variant="ghost" size="sm">
+                              View Receipt
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    }
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+            }
+        </div>
     </div>
   )
 }

@@ -5,7 +5,8 @@ const payments: Payment[] = [
   {
     id: "payment-001",
     tenantId: "tenant-001",
-    leaseId: "lease-001",
+    leaseId: "lease-001"
+    unitId: "unit-001",
     amount: 1500,
     type: "rent",
     method: "bank",
@@ -20,6 +21,7 @@ const payments: Payment[] = [
     id: "payment-002",
     tenantId: "tenant-001",
     leaseId: "lease-001",
+    unitId: "unit-001",
     amount: 1500,
     type: "rent",
     method: "bank",
@@ -34,6 +36,7 @@ const payments: Payment[] = [
     id: "payment-003",
     tenantId: "tenant-001",
     leaseId: "lease-001",
+    unitId: "unit-001",
     amount: 1500,
     type: "rent",
     method: "bank",
@@ -48,6 +51,7 @@ const payments: Payment[] = [
     id: "payment-004",
     tenantId: "tenant-001",
     leaseId: "lease-001",
+    unitId: "unit-001",
     amount: 1500,
     type: "rent",
     method: "credit",
@@ -62,6 +66,7 @@ const payments: Payment[] = [
     id: "payment-005",
     tenantId: "tenant-001",
     leaseId: "lease-001",
+    unitId: "unit-001",
     amount: 1500,
     type: "rent",
     method: "bank",
@@ -76,6 +81,7 @@ const payments: Payment[] = [
     id: "payment-006",
     tenantId: "tenant-002",
     leaseId: "lease-002",
+    unitId: "unit-003",
     amount: 1200,
     type: "rent",
     method: "credit",
@@ -90,6 +96,7 @@ const payments: Payment[] = [
     id: "payment-007",
     tenantId: "tenant-002",
     leaseId: "lease-002",
+    unitId: "unit-003",
     amount: 1200,
     type: "rent",
     method: "credit",
@@ -104,6 +111,7 @@ const payments: Payment[] = [
     id: "payment-008",
     tenantId: "tenant-002",
     leaseId: "lease-002",
+    unitId: "unit-003",
     amount: 1200,
     type: "rent",
     method: "credit",
@@ -118,6 +126,7 @@ const payments: Payment[] = [
     id: "payment-009",
     tenantId: "tenant-002",
     leaseId: "lease-002",
+    unitId: "unit-003",
     amount: 1200,
     type: "rent",
     method: "credit",
@@ -132,6 +141,7 @@ const payments: Payment[] = [
     id: "payment-010",
     tenantId: "tenant-003",
     leaseId: "lease-003",
+    unitId: "unit-004",
     amount: 2500,
     type: "rent",
     method: "bank",
@@ -146,6 +156,7 @@ const payments: Payment[] = [
     id: "payment-011",
     tenantId: "tenant-003",
     leaseId: "lease-003",
+    unitId: "unit-004",
     amount: 2500,
     type: "rent",
     method: "bank",
@@ -160,6 +171,7 @@ const payments: Payment[] = [
     id: "payment-012",
     tenantId: "tenant-003",
     leaseId: "lease-003",
+    unitId: "unit-004",
     amount: 2500,
     type: "rent",
     method: "bank",
@@ -174,6 +186,7 @@ const payments: Payment[] = [
     id: "payment-013",
     tenantId: "tenant-003",
     leaseId: "lease-003",
+    unitId: "unit-004",
     amount: 2500,
     type: "rent",
     method: "bank",
@@ -188,6 +201,7 @@ const payments: Payment[] = [
     id: "payment-014",
     tenantId: "tenant-004",
     leaseId: "lease-004",
+    unitId: "unit-006",
     amount: 2800,
     type: "rent",
     method: "check",
@@ -202,6 +216,7 @@ const payments: Payment[] = [
     id: "payment-015",
     tenantId: "tenant-004",
     leaseId: "lease-004",
+    unitId: "unit-006",
     amount: 2800,
     type: "rent",
     method: "check",
@@ -231,6 +246,10 @@ export function getPaymentsByTenantId(tenantId: string) {
 
 export function getPaymentsByUnitId(unitId: string) {
   return payments.filter((payment) => payment.unitId === unitId)
+}
+
+export function getPaymentsByLease(leaseId: string) {
+  return payments.filter((payment) => payment.leaseId === leaseId)
 }
 
 // Function to get payment stats

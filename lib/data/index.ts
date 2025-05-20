@@ -46,6 +46,7 @@ import payments, {
   getPaymentById,
   getPaymentsByTenantId,
   getPaymentsByUnitId,
+  getPaymentsByLease,
   getPaymentStats,
 } from "@/lib/data/payments"
 
@@ -115,6 +116,7 @@ export {
   getPaymentById,
   getPaymentsByTenantId,
   getPaymentsByUnitId,
+  getPaymentsByLease,
   getPaymentStats,
   // Maintenance Requests
   maintenanceRequests,
