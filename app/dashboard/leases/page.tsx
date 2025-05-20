@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Plus } from "lucide-react"
+import { Plus, Check } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,7 +8,18 @@ import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getLeases, getTenants } from "@/lib/data"
-import { Suspense } from "react"
+import { Suspense, useState } from "react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export const metadata: Metadata = {
   title: "Leases | Property Management SaaS",
@@ -297,14 +308,101 @@ async function ExpiringLeasesList() {
 }
 
 export default function LeasesPage() {
+  const [isAddLeaseOpen, setIsAddLeaseOpen] = useState(false)
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Leases</h1>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Add Lease
-        </Button>
+        <Dialog open={isAddLeaseOpen} onOpenChange={setIsAddLeaseOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <Plus className="mr-2 h-4 w-4" />
+              Add Lease
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle>Add New Lease</DialogTitle>
+              <DialogDescription>Enter the details of the new lease agreement.</DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="lease-tenant" className="text-right text-sm font-medium">
+                  Tenant
+                </label>
+                <Select>
+                  <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Select tenant" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="james">James Wilson</SelectItem>
+                    <SelectItem value="sarah">Sarah Johnson</SelectItem>
+                    <SelectItem value="michael">Michael Brown</SelectItem>
+                    <SelectItem value="emily">Emily Davis</SelectItem>
+                    <SelectItem value="david">David Martinez</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="lease-property" className="text-right text-sm font-medium">
+                  Property
+                </label>
+                <Select>
+                  <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Select property" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="oakwood">Oakwood Apartments</SelectItem>
+                    <SelectItem value="riverside">Riverside Homes</SelectItem>
+                    <SelectItem value="pine">Pine Street Condos</SelectItem>
+                    <SelectItem value="maple">Maple Court</SelectItem>
+                    <SelectItem value="cedar">Cedar Heights</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="lease-unit" className="text-right text-sm font-medium">
+                  Unit
+                </label>
+                <Input id="lease-unit" placeholder="Unit number" className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="lease-start" className="text-right text-sm font-medium">
+                  Start Date
+                </label>
+                <Input id="lease-start" type="date" className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="lease-end" className="text-right text-sm font-medium">
+                  End Date
+                </label>
+                <Input id="lease-end" type="date" className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="lease-rent" className="text-right text-sm font-medium">
+                  Monthly Rent
+                </label>
+                <Input id="lease-rent" placeholder="$0.00" className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="lease-deposit" className="text-right text-sm font-medium">
+                  Security Deposit
+                </label>
+                <Input id="lease-deposit" placeholder="$0.00" className="col-span-3" />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsAddLeaseOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => setIsAddLeaseOpen(false)}>
+                <Check className="mr-2 h-4 w-4" />
+                Add Lease
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="flex items-center gap-2">

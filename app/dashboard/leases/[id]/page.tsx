@@ -27,7 +27,7 @@ export default async function LeasePage({ params }: { params: { id: string } }) 
   const property = unit && unit.propertyId ? await getPropertyById(unit.propertyId) : null
 
   // Sample payment history - in a real app, this would come from the database
-  const paymentHistory = await getPaymentsByLease(lease.id);
+  const paymentHistory = await getPaymentsByLease(lease.id)
 
   // Sample lease clauses
   const leaseClauses = [
