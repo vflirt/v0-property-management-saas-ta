@@ -49,7 +49,7 @@ function PropertiesLoading() {
 // Properties list component
 async function PropertiesList() {
   // Simulate loading delay
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  await new Promise((resolve) => setTimeout(resolve, 3000))
 
   const properties = await getProperties()
 
@@ -156,22 +156,22 @@ export default function PropertiesPage() {
           <TabsTrigger value="condos">Condos</TabsTrigger>
         </TabsList>
         <TabsContent value="all" className="space-y-4">
-          <Suspense fallback={<PropertiesLoading />}>
+          <Suspense fallback={<PropertiesLoading />} key="list">
             <PropertiesList />
           </Suspense>
         </TabsContent>
         <TabsContent value="apartments" className="space-y-4">
-          <Suspense fallback={<PropertiesLoading />}>
+          <Suspense fallback={<PropertiesLoading />} key="apartments">
             <FilteredPropertiesList type="apartments" />
           </Suspense>
         </TabsContent>
         <TabsContent value="houses" className="space-y-4">
-          <Suspense fallback={<PropertiesLoading />}>
+          <Suspense fallback={<PropertiesLoading />} key="lhousesst">
             <FilteredPropertiesList type="houses" />
           </Suspense>
         </TabsContent>
         <TabsContent value="condos" className="space-y-4">
-          <Suspense fallback={<PropertiesLoading />}>
+          <Suspense fallback={<PropertiesLoading />} key="condos">
             <FilteredPropertiesList type="condos" />
           </Suspense>
         </TabsContent>
