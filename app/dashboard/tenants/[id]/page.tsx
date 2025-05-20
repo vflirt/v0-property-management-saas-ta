@@ -6,33 +6,36 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
-  loadTenantById,
-  loadUnitById,
-  loadPropertyById,
-  loadLeaseByTenantId,
-  loadPaymentsByTenantId,
-  loadMaintenanceRequestsByTenantId,
+  getTenantById,
+  getUnitById,
+  getPropertyById,
+  getLeaseByTenantId,
+  getPaymentsByTenantId,
+  getMaintenanceRequestsByTenantId,
 } from "@/lib/data"
 
 export default async function TenantPage({ params }: { params: { id: string } }) {
-  const tenant = await loadTenantById(params.id)
+  // Add a delay to simulate loading from a database
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+
+  const tenant = await getTenantById(params.id)
 
   if (!tenant) {
     notFound()
   }
 
-  const unit = tenant.unitId ? await loadUnitById(tenant.unitId) : null
-  const property = tenant.propertyId ? await loadPropertyById(tenant.propertyId) : null
-  const lease = tenant.leaseId ? await loadLeaseByTenantId(tenant.id) : null
-  const payments = await loadPaymentsByTenantId(tenant.id)
-  const maintenanceRequests = await loadMaintenanceRequestsByTenantId(tenant.id)
+  const unit = tenant.unitId ? await getUnitById(tenant.unitId) : null
+  const property = unit && unit.propertyId ? await getPropertyById(unit.propertyId) : null
+  const lease = await getLeaseByTenantId(tenant.id)
+  const payments = await getPaymentsByTenantId(tenant.id)
+  const maintenanceRequests = await getMaintenanceRequestsByTenantId(tenant.id)
 
   return (
     <div className="flex flex-col space-y-6 p-6">
       <div className="flex flex-col space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">{tenant.name}</h1>
         <p className="text-muted-foreground">
-          {unit ? `Unit ${unit.unitNumber}, ${property?.name}` : "No unit assigned"}
+          {unit ? `Unit ${unit.unitNumber}, ${property?.name || "Unknown Property"}` : "No unit assigned"}
         </p>
       </div>
 

@@ -6,24 +6,25 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
-  loadPropertyById,
-  loadUnitsByPropertyId,
-  loadTenantsByPropertyId,
-  loadLeasesByPropertyId,
-  loadMaintenanceRequestsByPropertyId,
+  getPropertyById,
+  getUnitsByPropertyId,
+  getTenantsByPropertyId,
+  getLeasesByPropertyId,
+  getMaintenanceRequestsByPropertyId,
 } from "@/lib/data"
 
 export default async function PropertyPage({ params }: { params: { id: string } }) {
-  const property = await loadPropertyById(params.id)
+
+  const property = await getPropertyById(params.id)
 
   if (!property) {
     notFound()
   }
 
-  const units = await loadUnitsByPropertyId(property.id)
-  const tenants = await loadTenantsByPropertyId(property.id)
-  const leases = await loadLeasesByPropertyId(property.id)
-  const maintenanceRequests = await loadMaintenanceRequestsByPropertyId(property.id)
+  const units = await getUnitsByPropertyId(property.id)
+  const tenants = await getTenantsByPropertyId(property.id)
+  const leases = await getLeasesByPropertyId(property.id)
+  const maintenanceRequests = await getMaintenanceRequestsByPropertyId(property.id)
 
   return (
     <div className="flex flex-col space-y-6 p-6">
@@ -134,7 +135,9 @@ export default async function PropertyPage({ params }: { params: { id: string } 
               <Card key={tenant.id}>
                 <CardHeader>
                   <CardTitle>{tenant.name}</CardTitle>
-                  <CardDescription>Unit: {units.find((u) => u.id === tenant.unitId)?.unitNumber}</CardDescription>
+                  <CardDescription>
+                    Unit: {units.find((u) => u.id === tenant.unitId)?.unitNumber || "None"}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-2">
@@ -167,10 +170,10 @@ export default async function PropertyPage({ params }: { params: { id: string } 
             {leases.map((lease) => (
               <Card key={lease.id}>
                 <CardHeader>
-                  <CardTitle>Lease #{lease.id.split("-")[1]}</CardTitle>
+                  <CardTitle>Lease #{lease.id.split("-")[1] || lease.id}</CardTitle>
                   <CardDescription>
-                    Unit: {units.find((u) => u.id === lease.unitId)?.unitNumber} | Tenant:{" "}
-                    {tenants.find((t) => t.id === lease.tenantId)?.name}
+                    Unit: {units.find((u) => u.id === lease.unitId)?.unitNumber || "None"} | Tenant:{" "}
+                    {tenants.find((t) => t.id === lease.tenantId)?.name || "None"}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -206,7 +209,8 @@ export default async function PropertyPage({ params }: { params: { id: string } 
                 <CardHeader>
                   <CardTitle>{request.title}</CardTitle>
                   <CardDescription>
-                    Unit: {units.find((u) => u.id === request.unitId)?.unitNumber} | Priority: {request.priority}
+                    Unit: {units.find((u) => u.id === request.unitId)?.unitNumber || "None"} | Priority:{" "}
+                    {request.priority}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

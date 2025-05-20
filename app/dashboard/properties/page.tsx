@@ -5,69 +5,144 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
+import { getProperties } from "@/lib/data"
+import { Suspense } from "react"
 
 export const metadata: Metadata = {
   title: "Properties | Property Management SaaS",
   description: "Manage your properties",
 }
 
-// Sample properties data
-const properties = [
-  {
-    id: "prop_1",
-    name: "Sunset Apartments",
-    address: "123 Sunset Blvd, Los Angeles, CA 90001",
-    type: "Apartment Complex",
-    units: 24,
-    occupancyRate: 92,
-    image: "/placeholder.svg?height=100&width=200",
-  },
-  {
-    id: "prop_2",
-    name: "Oakwood Residences",
-    address: "456 Oak St, San Francisco, CA 94102",
-    type: "Apartment Complex",
-    units: 36,
-    occupancyRate: 88,
-    image: "/placeholder.svg?height=100&width=200",
-  },
-  {
-    id: "prop_3",
-    name: "Riverside Condos",
-    address: "789 River Rd, San Diego, CA 92101",
-    type: "Condominium",
-    units: 18,
-    occupancyRate: 100,
-    image: "/placeholder.svg?height=100&width=200",
-  },
-  {
-    id: "prop_4",
-    name: "Pine Street Homes",
-    address: "101 Pine St, Sacramento, CA 95814",
-    type: "Single Family",
-    units: 5,
-    occupancyRate: 80,
-    image: "/placeholder.svg?height=100&width=200",
-  },
-  {
-    id: "prop_5",
-    name: "Marina Bay Towers",
-    address: "202 Marina Blvd, Oakland, CA 94612",
-    type: "Apartment Complex",
-    units: 48,
-    occupancyRate: 94,
-    image: "/placeholder.svg?height=100&width=200",
-  },
-  {
-    id: "prop_6",
-    name: "Highland Park Residences",
-    address: "303 Highland Ave, San Jose, CA 95110",
-    type: "Apartment Complex",
-    units: 30,
-    occupancyRate: 90,
-    image: "/placeholder.svg?height=100&width=200",
-  },
-]
+// Loading component for properties
+function PropertiesLoading() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {Array(6)
+        .fill(0)
+        .map((_, i) => (
+          <Card key={i} className="overflow-hidden transition-all hover:shadow-md">
+            <div className="aspect-video w-full bg-muted animate-pulse" />
+            <CardHeader className="p-4">
+              <CardTitle className="flex items-center justify-between">
+                <span className="h-6 w-32 bg-muted animate-pulse rounded"></span>
+                <Badge className="opacity-50">Loading...</Badge>
+              </CardTitle>
+              <CardDescription className="h-4 w-48 bg-muted animate-pulse rounded"></CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 pt-0">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Building2 className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <span className="h-4 w-16 bg-muted animate-pulse rounded"></span>
+                </div>
+                <div>
+                  <span className="h-4 w-12 bg-muted animate-pulse rounded"></span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+    </div>
+  )
+}
+
+// Properties list component
+async function PropertiesList() {
+  // Simulate loading delay
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+
+  const properties = await getProperties()
+
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {properties.map((property) => (
+        <Link key={property.id} href={`/dashboard/properties/${property.id}`}>
+          <Card className="overflow-hidden transition-all hover:shadow-md">
+            <div
+              className="aspect-video w-full bg-cover bg-center"
+              style={{ backgroundImage: `url(${property.image})` }}
+            />
+            <CardHeader className="p-4">
+              <CardTitle className="flex items-center justify-between">
+                <span>{property.name}</span>
+                <Badge>{property.type}</Badge>
+              </CardTitle>
+              <CardDescription>
+                {property.address}, {property.city}, {property.state} {property.zipCode}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 pt-0">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Building2 className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">{property.units} Units</span>
+                </div>
+                <div>
+                  <span className="font-medium">{Math.round(property.occupancyRate * 100)}%</span>
+                  <span className="ml-1 text-sm text-muted-foreground">Occupied</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+      ))}
+    </div>
+  )
+}
+
+// Filtered properties list component
+async function FilteredPropertiesList({ type }: { type: string }) {
+  // Simulate loading delay
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+
+  const allProperties = await getProperties()
+  const properties = allProperties.filter((property) => {
+    if (type === "apartments") return property.type === "apartment"
+    if (type === "houses") return property.type === "house"
+    if (type === "condos") return property.type === "condo"
+    return true
+  })
+
+  if (properties.length === 0) {
+    return <div className="text-center p-8 text-muted-foreground">No properties found in this category.</div>
+  }
+
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {properties.map((property) => (
+        <Link key={property.id} href={`/dashboard/properties/${property.id}`}>
+          <Card className="overflow-hidden transition-all hover:shadow-md">
+            <div
+              className="aspect-video w-full bg-cover bg-center"
+              style={{ backgroundImage: `url(${property.image})` }}
+            />
+            <CardHeader className="p-4">
+              <CardTitle className="flex items-center justify-between">
+                <span>{property.name}</span>
+                <Badge>{property.type}</Badge>
+              </CardTitle>
+              <CardDescription>
+                {property.address}, {property.city}, {property.state} {property.zipCode}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 pt-0">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Building2 className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">{property.units} Units</span>
+                </div>
+                <div>
+                  <span className="font-medium">{Math.round(property.occupancyRate * 100)}%</span>
+                  <span className="ml-1 text-sm text-muted-foreground">Occupied</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+      ))}
+    </div>
+  )
+}
 
 export default function PropertiesPage() {
   return (
@@ -88,142 +163,24 @@ export default function PropertiesPage() {
           <TabsTrigger value="condos">Condos</TabsTrigger>
         </TabsList>
         <TabsContent value="all" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {properties.map((property) => (
-              <Link key={property.id} href={`/dashboard/properties/${property.id}`}>
-                <Card className="overflow-hidden transition-all hover:shadow-md">
-                  <div
-                    className="aspect-video w-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${property.image})` }}
-                  />
-                  <CardHeader className="p-4">
-                    <CardTitle className="flex items-center justify-between">
-                      <span>{property.name}</span>
-                      <Badge>{property.type}</Badge>
-                    </CardTitle>
-                    <CardDescription>{property.address}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-4 pt-0">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <Building2 className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm text-muted-foreground">{property.units} Units</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">{property.occupancyRate}%</span>
-                        <span className="ml-1 text-sm text-muted-foreground">Occupied</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <Suspense fallback={<PropertiesLoading />}>
+            <PropertiesList />
+          </Suspense>
         </TabsContent>
         <TabsContent value="apartments" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {properties
-              .filter((property) => property.type === "Apartment Complex")
-              .map((property) => (
-                <Link key={property.id} href={`/dashboard/properties/${property.id}`}>
-                  <Card className="overflow-hidden transition-all hover:shadow-md">
-                    <div
-                      className="aspect-video w-full bg-cover bg-center"
-                      style={{ backgroundImage: `url(${property.image})` }}
-                    />
-                    <CardHeader className="p-4">
-                      <CardTitle className="flex items-center justify-between">
-                        <span>{property.name}</span>
-                        <Badge>{property.type}</Badge>
-                      </CardTitle>
-                      <CardDescription>{property.address}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-4 pt-0">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <Building2 className="mr-2 h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground">{property.units} Units</span>
-                        </div>
-                        <div>
-                          <span className="font-medium">{property.occupancyRate}%</span>
-                          <span className="ml-1 text-sm text-muted-foreground">Occupied</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-          </div>
+          <Suspense fallback={<PropertiesLoading />}>
+            <FilteredPropertiesList type="apartments" />
+          </Suspense>
         </TabsContent>
         <TabsContent value="houses" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {properties
-              .filter((property) => property.type === "Single Family")
-              .map((property) => (
-                <Link key={property.id} href={`/dashboard/properties/${property.id}`}>
-                  <Card className="overflow-hidden transition-all hover:shadow-md">
-                    <div
-                      className="aspect-video w-full bg-cover bg-center"
-                      style={{ backgroundImage: `url(${property.image})` }}
-                    />
-                    <CardHeader className="p-4">
-                      <CardTitle className="flex items-center justify-between">
-                        <span>{property.name}</span>
-                        <Badge>{property.type}</Badge>
-                      </CardTitle>
-                      <CardDescription>{property.address}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-4 pt-0">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <Building2 className="mr-2 h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground">{property.units} Units</span>
-                        </div>
-                        <div>
-                          <span className="font-medium">{property.occupancyRate}%</span>
-                          <span className="ml-1 text-sm text-muted-foreground">Occupied</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-          </div>
+          <Suspense fallback={<PropertiesLoading />}>
+            <FilteredPropertiesList type="houses" />
+          </Suspense>
         </TabsContent>
         <TabsContent value="condos" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {properties
-              .filter((property) => property.type === "Condominium")
-              .map((property) => (
-                <Link key={property.id} href={`/dashboard/properties/${property.id}`}>
-                  <Card className="overflow-hidden transition-all hover:shadow-md">
-                    <div
-                      className="aspect-video w-full bg-cover bg-center"
-                      style={{ backgroundImage: `url(${property.image})` }}
-                    />
-                    <CardHeader className="p-4">
-                      <CardTitle className="flex items-center justify-between">
-                        <span>{property.name}</span>
-                        <Badge>{property.type}</Badge>
-                      </CardTitle>
-                      <CardDescription>{property.address}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-4 pt-0">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <Building2 className="mr-2 h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground">{property.units} Units</span>
-                        </div>
-                        <div>
-                          <span className="font-medium">{property.occupancyRate}%</span>
-                          <span className="ml-1 text-sm text-muted-foreground">Occupied</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-          </div>
+          <Suspense fallback={<PropertiesLoading />}>
+            <FilteredPropertiesList type="condos" />
+          </Suspense>
         </TabsContent>
       </Tabs>
     </div>

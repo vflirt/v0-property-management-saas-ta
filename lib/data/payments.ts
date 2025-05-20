@@ -1,4 +1,4 @@
-import type { Payment, PaymentStats } from "./types"
+import type { Payment, PaymentStats } from "@/lib/data/types"
 
 // Sample payment data
 const payments: Payment[] = [
@@ -6,175 +6,211 @@ const payments: Payment[] = [
     id: "payment-001",
     tenantId: "tenant-001",
     leaseId: "lease-001",
-    unitId: "unit-001",
-    propertyId: "prop-001",
-    amount: 1800,
-    date: "2023-05-01T10:15:00Z",
+    amount: 1500,
     type: "rent",
-    status: "completed",
     method: "bank",
-    createdAt: "2023-05-01T10:15:00Z",
-    updatedAt: "2023-05-01T10:15:00Z",
+    status: "paid",
+    dueDate: "2023-01-01T00:00:00Z",
+    paidDate: "2023-01-01T10:30:00Z",
+    notes: "January rent",
+    createdAt: "2022-12-25T14:00:00Z",
+    updatedAt: "2023-01-01T10:30:00Z",
   },
   {
     id: "payment-002",
-    tenantId: "tenant-002",
-    leaseId: "lease-002",
-    unitId: "unit-002",
-    propertyId: "prop-001",
-    amount: 2200,
-    date: "2023-05-03T14:30:00Z",
+    tenantId: "tenant-001",
+    leaseId: "lease-001",
+    amount: 1500,
     type: "rent",
-    status: "completed",
-    method: "credit",
-    createdAt: "2023-05-03T14:30:00Z",
-    updatedAt: "2023-05-03T14:30:00Z",
+    method: "bank",
+    status: "paid",
+    dueDate: "2023-02-01T00:00:00Z",
+    paidDate: "2023-02-01T09:15:00Z",
+    notes: "February rent",
+    createdAt: "2023-01-25T16:30:00Z",
+    updatedAt: "2023-02-01T09:15:00Z",
   },
   {
     id: "payment-003",
-    tenantId: "tenant-003",
-    leaseId: "lease-003",
-    unitId: "unit-004",
-    propertyId: "prop-002",
-    amount: 2600,
-    date: "2023-05-01T09:45:00Z",
+    tenantId: "tenant-001",
+    leaseId: "lease-001",
+    amount: 1500,
     type: "rent",
-    status: "completed",
     method: "bank",
-    createdAt: "2023-05-01T09:45:00Z",
-    updatedAt: "2023-05-01T09:45:00Z",
+    status: "paid",
+    dueDate: "2023-03-01T00:00:00Z",
+    paidDate: "2023-03-01T11:45:00Z",
+    notes: "March rent",
+    createdAt: "2023-02-25T10:00:00Z",
+    updatedAt: "2023-03-01T11:45:00Z",
   },
   {
     id: "payment-004",
-    tenantId: "tenant-004",
-    leaseId: "lease-004",
-    unitId: "unit-005",
-    propertyId: "prop-002",
-    amount: 3200,
-    date: "2023-05-02T11:20:00Z",
+    tenantId: "tenant-001",
+    leaseId: "lease-001",
+    amount: 1500,
     type: "rent",
-    status: "completed",
     method: "credit",
-    createdAt: "2023-05-02T11:20:00Z",
-    updatedAt: "2023-05-02T11:20:00Z",
+    status: "paid",
+    dueDate: "2023-04-01T00:00:00Z",
+    paidDate: "2023-04-01T14:20:00Z",
+    notes: "April rent",
+    createdAt: "2023-03-25T09:30:00Z",
+    updatedAt: "2023-04-01T14:20:00Z",
   },
   {
     id: "payment-005",
-    tenantId: "tenant-005",
-    leaseId: "lease-005",
-    unitId: "unit-006",
-    propertyId: "prop-003",
-    amount: 2500,
-    date: "2023-05-01T13:10:00Z",
+    tenantId: "tenant-001",
+    leaseId: "lease-001",
+    amount: 1500,
     type: "rent",
-    status: "completed",
     method: "bank",
-    createdAt: "2023-05-01T13:10:00Z",
-    updatedAt: "2023-05-01T13:10:00Z",
+    status: "pending",
+    dueDate: "2023-05-01T00:00:00Z",
+    paidDate: null,
+    notes: "May rent",
+    createdAt: "2023-04-25T15:45:00Z",
+    updatedAt: "2023-04-25T15:45:00Z",
   },
   {
     id: "payment-006",
-    tenantId: "tenant-006",
-    leaseId: "lease-006",
-    unitId: "unit-007",
-    propertyId: "prop-004",
-    amount: 4000,
-    date: "2023-05-10T15:45:00Z",
+    tenantId: "tenant-002",
+    leaseId: "lease-002",
+    amount: 1200,
     type: "rent",
-    status: "pending",
-    method: "check",
-    notes: "Check in mail",
-    createdAt: "2023-05-10T15:45:00Z",
-    updatedAt: "2023-05-10T15:45:00Z",
+    method: "credit",
+    status: "paid",
+    dueDate: "2023-02-01T00:00:00Z",
+    paidDate: "2023-02-01T13:10:00Z",
+    notes: "February rent",
+    createdAt: "2023-01-25T11:30:00Z",
+    updatedAt: "2023-02-01T13:10:00Z",
   },
   {
     id: "payment-007",
-    tenantId: "tenant-007",
-    leaseId: "lease-007",
-    unitId: "unit-008",
-    propertyId: "prop-005",
-    amount: 1900,
-    date: "2023-05-01T10:30:00Z",
+    tenantId: "tenant-002",
+    leaseId: "lease-002",
+    amount: 1200,
     type: "rent",
-    status: "completed",
     method: "credit",
-    createdAt: "2023-05-01T10:30:00Z",
-    updatedAt: "2023-05-01T10:30:00Z",
+    status: "paid",
+    dueDate: "2023-03-01T00:00:00Z",
+    paidDate: "2023-03-01T10:05:00Z",
+    notes: "March rent",
+    createdAt: "2023-02-25T14:20:00Z",
+    updatedAt: "2023-03-01T10:05:00Z",
   },
   {
     id: "payment-008",
-    tenantId: "tenant-001",
-    leaseId: "lease-001",
-    unitId: "unit-001",
-    propertyId: "prop-001",
-    amount: 150,
-    date: "2023-05-15T09:20:00Z",
-    type: "fee",
-    status: "completed",
+    tenantId: "tenant-002",
+    leaseId: "lease-002",
+    amount: 1200,
+    type: "rent",
     method: "credit",
-    notes: "Late fee",
-    createdAt: "2023-05-15T09:20:00Z",
-    updatedAt: "2023-05-15T09:20:00Z",
+    status: "paid",
+    dueDate: "2023-04-01T00:00:00Z",
+    paidDate: "2023-04-01T16:30:00Z",
+    notes: "April rent",
+    createdAt: "2023-03-25T13:45:00Z",
+    updatedAt: "2023-04-01T16:30:00Z",
   },
   {
     id: "payment-009",
-    tenantId: "tenant-003",
-    leaseId: "lease-003",
-    unitId: "unit-004",
-    propertyId: "prop-002",
-    amount: 100,
-    date: "2023-05-10T14:15:00Z",
-    type: "other",
-    status: "completed",
+    tenantId: "tenant-002",
+    leaseId: "lease-002",
+    amount: 1200,
+    type: "rent",
     method: "credit",
-    notes: "Parking fee",
-    createdAt: "2023-05-10T14:15:00Z",
-    updatedAt: "2023-05-10T14:15:00Z",
+    status: "late",
+    dueDate: "2023-05-01T00:00:00Z",
+    paidDate: null,
+    notes: "May rent - late notice sent",
+    createdAt: "2023-04-25T09:15:00Z",
+    updatedAt: "2023-05-05T14:30:00Z",
   },
   {
     id: "payment-010",
-    tenantId: "tenant-009",
-    leaseId: "lease-009",
-    unitId: "unit-003",
-    propertyId: "prop-001",
-    amount: 1500,
-    date: "2023-05-15T11:45:00Z",
-    type: "deposit",
-    status: "completed",
+    tenantId: "tenant-003",
+    leaseId: "lease-003",
+    amount: 2500,
+    type: "rent",
     method: "bank",
-    notes: "Security deposit",
-    createdAt: "2023-05-15T11:45:00Z",
-    updatedAt: "2023-05-15T11:45:00Z",
+    status: "paid",
+    dueDate: "2023-02-01T00:00:00Z",
+    paidDate: "2023-01-30T11:20:00Z",
+    notes: "February rent",
+    createdAt: "2023-01-25T10:00:00Z",
+    updatedAt: "2023-01-30T11:20:00Z",
   },
   {
     id: "payment-011",
-    tenantId: "tenant-010",
-    leaseId: "lease-010",
-    unitId: "unit-009",
-    propertyId: "prop-006",
-    amount: 2200,
-    date: "2023-05-18T10:30:00Z",
-    type: "deposit",
-    status: "completed",
-    method: "credit",
-    notes: "Security deposit",
-    createdAt: "2023-05-18T10:30:00Z",
-    updatedAt: "2023-05-18T10:30:00Z",
+    tenantId: "tenant-003",
+    leaseId: "lease-003",
+    amount: 2500,
+    type: "rent",
+    method: "bank",
+    status: "paid",
+    dueDate: "2023-03-01T00:00:00Z",
+    paidDate: "2023-02-28T14:45:00Z",
+    notes: "March rent",
+    createdAt: "2023-02-25T09:30:00Z",
+    updatedAt: "2023-02-28T14:45:00Z",
   },
   {
     id: "payment-012",
-    tenantId: "tenant-002",
-    leaseId: "lease-002",
-    unitId: "unit-002",
-    propertyId: "prop-001",
-    amount: 100,
-    date: "2023-04-20T13:45:00Z",
-    type: "fee",
-    status: "completed",
-    method: "credit",
-    notes: "Pet fee",
-    createdAt: "2023-04-20T13:45:00Z",
-    updatedAt: "2023-04-20T13:45:00Z",
+    tenantId: "tenant-003",
+    leaseId: "lease-003",
+    amount: 2500,
+    type: "rent",
+    method: "bank",
+    status: "paid",
+    dueDate: "2023-04-01T00:00:00Z",
+    paidDate: "2023-03-31T10:15:00Z",
+    notes: "April rent",
+    createdAt: "2023-03-25T13:00:00Z",
+    updatedAt: "2023-03-31T10:15:00Z",
+  },
+  {
+    id: "payment-013",
+    tenantId: "tenant-003",
+    leaseId: "lease-003",
+    amount: 2500,
+    type: "rent",
+    method: "bank",
+    status: "paid",
+    dueDate: "2023-05-01T00:00:00Z",
+    paidDate: "2023-04-30T15:30:00Z",
+    notes: "May rent",
+    createdAt: "2023-04-25T11:45:00Z",
+    updatedAt: "2023-04-30T15:30:00Z",
+  },
+  {
+    id: "payment-014",
+    tenantId: "tenant-004",
+    leaseId: "lease-004",
+    amount: 2800,
+    type: "rent",
+    method: "check",
+    status: "paid",
+    dueDate: "2023-04-01T00:00:00Z",
+    paidDate: "2023-04-03T14:00:00Z",
+    notes: "April rent",
+    createdAt: "2023-03-25T10:30:00Z",
+    updatedAt: "2023-04-03T14:00:00Z",
+  },
+  {
+    id: "payment-015",
+    tenantId: "tenant-004",
+    leaseId: "lease-004",
+    amount: 2800,
+    type: "rent",
+    method: "check",
+    status: "pending",
+    dueDate: "2023-05-01T00:00:00Z",
+    paidDate: null,
+    notes: "May rent",
+    createdAt: "2023-04-25T09:00:00Z",
+    updatedAt: "2023-04-25T09:00:00Z",
   },
 ]
 
@@ -193,52 +229,8 @@ export function getPaymentsByTenantId(tenantId: string) {
   return payments.filter((payment) => payment.tenantId === tenantId)
 }
 
-// Function to get payments by property ID
-export async function getPaymentsByPropertyId(propertyId: string): Promise<Payment[]> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 450))
-  return payments.filter((payment) => payment.propertyId === propertyId)
-}
-
-// Function to get payments by lease ID
-export async function getPaymentsByLeaseId(leaseId: string): Promise<Payment[]> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 350))
-  return payments.filter((payment) => payment.leaseId === leaseId)
-}
-
-// Function to get recent payments
-export function getRecentPayments(payments: Payment[], count = 5): Payment[] {
-  return [...payments].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, count)
-}
-
-// Function to calculate total revenue
-export function calculateTotalRevenue(payments: Payment[]): number {
-  return payments
-    .filter((payment) => payment.status === "completed")
-    .reduce((total, payment) => total + payment.amount, 0)
-}
-
-// Function to calculate monthly revenue
-export function calculateMonthlyRevenue(payments: Payment[]): { month: string; revenue: number }[] {
-  const monthlyRevenue: Record<string, number> = {}
-
-  payments
-    .filter((payment) => payment.status === "completed")
-    .forEach((payment) => {
-      const date = new Date(payment.date)
-      const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`
-
-      if (!monthlyRevenue[monthYear]) {
-        monthlyRevenue[monthYear] = 0
-      }
-
-      monthlyRevenue[monthYear] += payment.amount
-    })
-
-  return Object.entries(monthlyRevenue)
-    .map(([month, revenue]) => ({ month, revenue }))
-    .sort((a, b) => a.month.localeCompare(b.month))
+export function getPaymentsByUnitId(unitId: string) {
+  return payments.filter((payment) => payment.unitId === unitId)
 }
 
 // Function to get payment stats

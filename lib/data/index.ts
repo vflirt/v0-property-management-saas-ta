@@ -1,63 +1,131 @@
-// Re-export all data functions
-export * from "./types"
-export * from "./properties"
-export * from "./units"
-export * from "./tenants"
-export * from "./leases"
-export * from "./payments"
-export * from "./maintenance"
-export * from "./users"
+// Import from the types file
+import type {
+  Property,
+  PropertyStats,
+  Unit,
+  UnitStats,
+  Tenant,
+  TenantStats,
+  Lease,
+  LeaseStats,
+  Payment,
+  PaymentStats,
+  MaintenanceRequest,
+  MaintenanceStats,
+  User,
+  DashboardStats,
+} from "@/lib/data/types"
 
-// Import functions for backward compatibility
-import { getPropertyById } from "./properties"
-import { getUnitsByPropertyId } from "./units"
-import { getTenantsByPropertyId } from "./tenants"
-import { getLeasesByPropertyId, getLeaseByTenantId } from "./leases"
-import { getMaintenanceRequestsByPropertyId, getMaintenanceRequestsByTenantId } from "./maintenance"
-import { getTenantById } from "./tenants"
-import { getUnitById } from "./units"
-import { getPaymentsByTenantId } from "./payments"
+// Import from individual data files
+import properties, { getProperties, getPropertyById, getPropertyStats } from "@/lib/data/properties"
 
-// Alias exports for backward compatibility
-export const loadPropertyById = getPropertyById
-export const loadUnitsByPropertyId = getUnitsByPropertyId
-export const loadTenantsByPropertyId = getTenantsByPropertyId
-export const loadLeasesByPropertyId = getLeasesByPropertyId
-export const loadMaintenanceRequestsByPropertyId = getMaintenanceRequestsByPropertyId
-export const loadTenantById = getTenantById
-export const loadUnitById = getUnitById
-export const loadLeaseByTenantId = getLeaseByTenantId
-export const loadPaymentsByTenantId = getPaymentsByTenantId
-export const loadMaintenanceRequestsByTenantId = getMaintenanceRequestsByTenantId
+import units, { getUnits, getUnitById, getUnitsByPropertyId, getUnitStats } from "@/lib/data/units"
 
-// Dashboard stats
-import { getPropertyStats } from "./properties"
-import { getUnitStats } from "./units"
-import { getTenantStats } from "./tenants"
-import { getLeaseStats } from "./leases"
-import { getPaymentStats } from "./payments"
-import { getMaintenanceStats } from "./maintenance"
-import type { DashboardStats } from "./types"
+import tenants, {
+  getTenants,
+  getTenantById,
+  getTenantsByPropertyId,
+  getTenantsByUnitId,
+  getTenantStats,
+} from "@/lib/data/tenants"
 
-// Function to get all dashboard stats
-export async function getDashboardStats(): Promise<DashboardStats> {
-  const [propertyStats, unitStats, tenantStats, leaseStats, paymentStats, maintenanceStats] = await Promise.all([
-    getPropertyStats(),
-    getUnitStats(),
-    getTenantStats(),
-    getLeaseStats(),
-    getPaymentStats(),
-    getMaintenanceStats(),
-  ])
+import leases, {
+  getLeases,
+  getLeaseById,
+  getLeasesByPropertyId,
+  getLeasesByTenantId,
+  getLeaseByTenantId,
+  getFirstLeaseByTenantId,
+  getLeasesByUnitId,
+  getLeaseByUnitId,
+  getLeaseStats,
+} from "@/lib/data/leases"
 
-  return {
-    totalProperties: propertyStats.totalProperties,
-    totalUnits: unitStats.totalUnits,
-    totalTenants: tenantStats.totalTenants,
-    occupancyRate: unitStats.occupancyRate,
-    rentCollected: paymentStats.totalCollected,
-    rentOutstanding: paymentStats.totalPending,
-    maintenanceRequests: maintenanceStats.totalRequests,
-    leaseRenewals: leaseStats.expiringSoon,
-  }
+import payments, {
+  getPayments,
+  getPaymentById,
+  getPaymentsByTenantId,
+  getPaymentsByUnitId,
+  getPaymentStats,
+} from "@/lib/data/payments"
+
+import maintenanceRequests, {
+  getMaintenanceRequests,
+  getMaintenanceRequestById,
+  getMaintenanceRequestsByPropertyId,
+  getMaintenanceRequestsByTenantId,
+  getMaintenanceRequestsByUnitId,
+  getMaintenanceStats,
+} from "@/lib/data/maintenance"
+
+import users, { getUsers, getUserById } from "@/lib/data/users"
+
+// Re-export all types
+export type {
+  Property,
+  PropertyStats,
+  Unit,
+  UnitStats,
+  Tenant,
+  TenantStats,
+  Lease,
+  LeaseStats,
+  Payment,
+  PaymentStats,
+  MaintenanceRequest,
+  MaintenanceStats,
+  User,
+  DashboardStats,
+}
+
+// Re-export all data and functions
+export {
+  // Properties
+  properties,
+  getProperties,
+  getPropertyById,
+  getPropertyStats,
+  // Units
+  units,
+  getUnits,
+  getUnitById,
+  getUnitsByPropertyId,
+  getUnitStats,
+  // Tenants
+  tenants,
+  getTenants,
+  getTenantById,
+  getTenantsByPropertyId,
+  getTenantsByUnitId,
+  getTenantStats,
+  // Leases
+  leases,
+  getLeases,
+  getLeaseById,
+  getLeasesByPropertyId,
+  getLeasesByTenantId,
+  getLeaseByTenantId,
+  getFirstLeaseByTenantId,
+  getLeasesByUnitId,
+  getLeaseByUnitId,
+  getLeaseStats,
+  // Payments
+  payments,
+  getPayments,
+  getPaymentById,
+  getPaymentsByTenantId,
+  getPaymentsByUnitId,
+  getPaymentStats,
+  // Maintenance Requests
+  maintenanceRequests,
+  getMaintenanceRequests,
+  getMaintenanceRequestById,
+  getMaintenanceRequestsByPropertyId,
+  getMaintenanceRequestsByTenantId,
+  getMaintenanceRequestsByUnitId,
+  getMaintenanceStats,
+  // Users
+  users,
+  getUsers,
+  getUserById,
 }

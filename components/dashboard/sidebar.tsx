@@ -1,126 +1,129 @@
 "use client"
 
-import type React from "react"
-
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { BarChart3, Building, CreditCard, FileText, Home, LayoutDashboard, LogOut, Settings, Users } from "lucide-react"
+
 import {
-  BarChart3,
-  Building,
-  CreditCard,
-  FileText,
-  Home,
-  Settings,
-  Users,
-  Bell,
-  Wrench,
-  FileBarChart,
-} from "lucide-react"
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar"
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-
-interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  items: {
-    href: string
-    title: string
-    icon: React.ReactNode
-  }[]
+interface DashboardSidebarProps {
+  role: "landlord" | "tenant" | "maintenance" | "manager" | "admin"
 }
 
-export function Sidebar({ className, items, ...props }: SidebarNavProps) {
+export function DashboardSidebar({ role }: DashboardSidebarProps) {
   const pathname = usePathname()
 
-  return (
-    <nav className={cn("flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1", className)} {...props}>
-      {items.map((item) => (
-        <Button
-          key={item.href}
-          variant={pathname === item.href ? "secondary" : "ghost"}
-          size="sm"
-          className={cn(
-            "justify-start",
-            pathname === item.href ? "bg-muted hover:bg-muted" : "hover:bg-transparent hover:underline",
-          )}
-          asChild
-        >
-          <Link href={item.href}>
-            {item.icon}
-            <span className="ml-2">{item.title}</span>
-          </Link>
-        </Button>
-      ))}
-    </nav>
-  )
-}
-
-export function DashboardSidebar() {
-  const items = [
+  // Define navigation items based on role
+  const navigationItems = [
     {
+      title: "Dashboard",
       href: "/dashboard",
-      title: "Overview",
-      icon: <Home className="h-4 w-4" />,
+      icon: LayoutDashboard,
+      roles: ["landlord", "tenant", "maintenance", "manager", "admin"],
     },
     {
-      href: "/dashboard/properties",
       title: "Properties",
-      icon: <Building className="h-4 w-4" />,
+      href: "/dashboard/properties",
+      icon: Building,
+      roles: ["landlord", "maintenance", "manager", "admin"],
     },
     {
-      href: "/dashboard/tenants",
       title: "Tenants",
-      icon: <Users className="h-4 w-4" />,
+      href: "/dashboard/tenants",
+      icon: Users,
+      roles: ["landlord", "manager", "admin"],
     },
     {
-      href: "/dashboard/leases",
       title: "Leases",
-      icon: <FileText className="h-4 w-4" />,
+      href: "/dashboard/leases",
+      icon: FileText,
+      roles: ["landlord", "manager", "admin"],
     },
     {
-      href: "/dashboard/billing",
-      title: "Billing",
-      icon: <CreditCard className="h-4 w-4" />,
-    },
-    {
-      href: "/dashboard/payments",
-      title: "Payments",
-      icon: <CreditCard className="h-4 w-4" />,
-    },
-    {
-      href: "/dashboard/maintenance",
       title: "Maintenance",
-      icon: <Wrench className="h-4 w-4" />,
+      href: "/dashboard/maintenance",
+      icon: Settings,
+      roles: ["landlord", "tenant", "maintenance", "manager"],
     },
     {
-      href: "/dashboard/analytics",
+      title: "Payments",
+      href: "/dashboard/payments",
+      icon: CreditCard,
+      roles: ["landlord", "tenant", "manager", "admin"],
+    },
+    {
+      title: "Billing",
+      href: "/dashboard/billing",
+      icon: CreditCard,
+      roles: ["landlord", "manager"],
+    },
+    {
       title: "Analytics",
-      icon: <BarChart3 className="h-4 w-4" />,
+      href: "/dashboard/analytics",
+      icon: BarChart3,
+      roles: ["landlord", "manager", "admin"],
     },
     {
-      href: "/dashboard/reports",
-      title: "Reports",
-      icon: <FileBarChart className="h-4 w-4" />,
-    },
-    {
-      href: "/dashboard/notifications",
-      title: "Notifications",
-      icon: <Bell className="h-4 w-4" />,
-    },
-    {
-      href: "/dashboard/users",
       title: "Users",
-      icon: <Users className="h-4 w-4" />,
-    },
-    {
-      href: "/dashboard/settings",
-      title: "Settings",
-      icon: <Settings className="h-4 w-4" />,
+      href: "/dashboard/users",
+      icon: Users,
+      roles: ["admin"],
     },
   ]
 
+  // Filter navigation items based on role
+  const filteredNavItems = navigationItems.filter((item) => item.roles.includes(role))
+
   return (
-    <div className="flex flex-col gap-6">
-      <Sidebar items={items} className="px-4 py-2" />
-    </div>
+    <Sidebar>
+      <SidebarHeader className="border-b py-4">
+        <Link href="/dashboard" className="flex items-center px-4">
+          <Building className="h-6 w-6 text-primary mr-2" />
+          <span className="font-bold text-xl">PropertyPulse</span>
+        </Link>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarMenu>
+          {filteredNavItems.map((item) => (
+            <SidebarMenuItem key={item.href}>
+              <SidebarMenuButton asChild isActive={pathname === item.href} tooltip={item.title}>
+                <Link href={item.href}>
+                  <item.icon className="h-5 w-5" />
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarContent>
+      <SidebarFooter className="border-t py-4">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link href="/">
+                <Home className="h-5 w-5" />
+                <span>Back to Home</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link href="/logout">
+                <LogOut className="h-5 w-5" />
+                <span>Logout</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
   )
 }
