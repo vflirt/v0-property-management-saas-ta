@@ -1,4 +1,5 @@
-import type { Metadata } from "next"
+"use client"
+
 import Link from "next/link"
 import { Building2, Plus, Check } from "lucide-react"
 // import { Building, Check, Edit, MoreHorizontal, Plus, Search, Trash } from "lucide-react"
@@ -20,10 +21,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-export const metadata: Metadata = {
-  title: "Properties | Property Management SaaS",
-  description: "Manage your properties",
-}
 
 // Loading component for properties
 function PropertiesLoading() {
