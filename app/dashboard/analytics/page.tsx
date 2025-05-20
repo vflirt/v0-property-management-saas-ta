@@ -1,7 +1,19 @@
 import type { Metadata } from "next"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AreaChart, BarChart, LineChart, Line, Area, Bar, XAxis, YAxis } from "recharts"
+import {
+  AreaChart,
+  BarChart,
+  LineChart,
+  Line,
+  Area,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts"
 
 export const metadata: Metadata = {
   title: "Analytics | Property Management SaaS",
@@ -79,17 +91,19 @@ export default function AnalyticsPage() {
                 <div className="text-2xl font-bold">$214,500</div>
                 <p className="text-xs text-muted-foreground">+12.5% from last year</p>
                 <div className="h-[80px]">
-                  <LineChart
-                    data={revenueData}
-                    margin={{
-                      top: 5,
-                      right: 10,
-                      left: 10,
-                      bottom: 0,
-                    }}
-                  >
-                    <Line type="monotone" dataKey="total" stroke="#0284c7" strokeWidth={2} dot={false} />
-                  </LineChart>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart
+                      data={revenueData}
+                      margin={{
+                        top: 5,
+                        right: 10,
+                        left: 10,
+                        bottom: 0,
+                      }}
+                    >
+                      <Line type="monotone" dataKey="total" stroke="#0284c7" strokeWidth={2} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </div>
               </CardContent>
             </Card>
@@ -102,17 +116,19 @@ export default function AnalyticsPage() {
                 <div className="text-2xl font-bold">95.2%</div>
                 <p className="text-xs text-muted-foreground">+2.1% from last year</p>
                 <div className="h-[80px]">
-                  <AreaChart
-                    data={occupancyData}
-                    margin={{
-                      top: 5,
-                      right: 10,
-                      left: 10,
-                      bottom: 0,
-                    }}
-                  >
-                    <Area type="monotone" dataKey="rate" stroke="#0284c7" fill="#0284c720" />
-                  </AreaChart>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart
+                      data={occupancyData}
+                      margin={{
+                        top: 5,
+                        right: 10,
+                        left: 10,
+                        bottom: 0,
+                      }}
+                    >
+                      <Area type="monotone" dataKey="rate" stroke="#0284c7" fill="#0284c720" />
+                    </AreaChart>
+                  </ResponsiveContainer>
                 </div>
               </CardContent>
             </Card>
@@ -125,17 +141,19 @@ export default function AnalyticsPage() {
                 <div className="text-2xl font-bold">229</div>
                 <p className="text-xs text-muted-foreground">-5.2% from last year</p>
                 <div className="h-[80px]">
-                  <BarChart
-                    data={maintenanceData}
-                    margin={{
-                      top: 5,
-                      right: 10,
-                      left: 10,
-                      bottom: 0,
-                    }}
-                  >
-                    <Bar dataKey="count" fill="#0284c7" radius={[4, 4, 0, 0]} />
-                  </BarChart>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={maintenanceData}
+                      margin={{
+                        top: 5,
+                        right: 10,
+                        left: 10,
+                        bottom: 0,
+                      }}
+                    >
+                      <Bar dataKey="count" fill="#0284c7" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
               </CardContent>
             </Card>
@@ -149,19 +167,23 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent className="pl-2">
                 <div className="h-[300px]">
-                  <BarChart
-                    data={revenueData}
-                    margin={{
-                      top: 5,
-                      right: 30,
-                      left: 20,
-                      bottom: 5,
-                    }}
-                  >
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Bar dataKey="total" fill="#0284c7" radius={[4, 4, 0, 0]} />
-                  </BarChart>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={revenueData}
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Bar dataKey="total" fill="#0284c7" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
               </CardContent>
             </Card>
@@ -173,19 +195,23 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent className="pl-2">
                 <div className="h-[300px]">
-                  <LineChart
-                    data={occupancyData}
-                    margin={{
-                      top: 5,
-                      right: 30,
-                      left: 20,
-                      bottom: 5,
-                    }}
-                  >
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Line type="monotone" dataKey="rate" stroke="#0284c7" strokeWidth={2} />
-                  </LineChart>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart
+                      data={occupancyData}
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="rate" stroke="#0284c7" strokeWidth={2} />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </div>
               </CardContent>
             </Card>
@@ -200,19 +226,23 @@ export default function AnalyticsPage() {
             </CardHeader>
             <CardContent>
               <div className="h-[400px]">
-                <BarChart
-                  data={revenueData}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Bar dataKey="total" fill="#0284c7" radius={[4, 4, 0, 0]} />
-                </BarChart>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={revenueData}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar dataKey="total" fill="#0284c7" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
@@ -226,19 +256,23 @@ export default function AnalyticsPage() {
             </CardHeader>
             <CardContent>
               <div className="h-[400px]">
-                <LineChart
-                  data={occupancyData}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Line type="monotone" dataKey="rate" stroke="#0284c7" strokeWidth={2} />
-                </LineChart>
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart
+                    data={occupancyData}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="rate" stroke="#0284c7" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
@@ -252,19 +286,23 @@ export default function AnalyticsPage() {
             </CardHeader>
             <CardContent>
               <div className="h-[400px]">
-                <BarChart
-                  data={maintenanceData}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Bar dataKey="count" fill="#0284c7" radius={[4, 4, 0, 0]} />
-                </BarChart>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={maintenanceData}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#0284c7" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </CardContent>
           </Card>
