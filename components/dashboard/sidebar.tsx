@@ -90,7 +90,7 @@ export function DashboardSidebar({ role }: DashboardSidebarProps) {
           <span className="font-bold text-xl">PropertyPulse</span>
         </Link>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="p-2 py-4">
         <SidebarMenu>
           {filteredNavItems.map((item) => (
             <SidebarMenuItem key={item.href}>

@@ -84,9 +84,6 @@ async function getTenantName(tenantId: string): Promise<string> {
 
 // Leases list component
 async function LeasesList() {
-  // Simulate loading delay
-  await new Promise((resolve) => setTimeout(resolve, 1500))
-
   const leases = await getLeases()
   const tenants = await getTenants()
 

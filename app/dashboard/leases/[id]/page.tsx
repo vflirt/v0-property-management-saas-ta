@@ -15,8 +15,6 @@ export const metadata: Metadata = {
 }
 
 export default async function LeasePage({ params }: { params: { id: string } }) {
-  // Add a delay to simulate loading from a database
-  await new Promise((resolve) => setTimeout(resolve, 1300))
 
   const lease = await getLeaseById(params.id)
 
