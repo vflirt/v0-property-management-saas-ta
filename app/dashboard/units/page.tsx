@@ -1,5 +1,3 @@
-"use client"
-
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Plus } from "lucide-react"
@@ -12,10 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getUnits, getProperties } from "@/lib/data"
 import { Suspense } from "react"
 
-//export const metadata: Metadata = {
-//  title: "Units | Property Management SaaS",
-//  description: "Manage your units",
-//}
+export const metadata: Metadata = {
+  title: "Units | Property Management SaaS",
+  description: "Manage your units",
+}
 
 // Loading component for units
 function UnitsLoading() {

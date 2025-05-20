@@ -36,6 +36,12 @@ export function DashboardSidebar({ role }: DashboardSidebarProps) {
       roles: ["landlord", "maintenance", "manager", "admin"],
     },
     {
+      title: "Units",
+      href: "/dashboard/units",
+      icon: Building,
+      roles: ["landlord", "maintenance", "manager", "admin"],
+    },
+    {
       title: "Tenants",
       href: "/dashboard/tenants",
       icon: Users,
