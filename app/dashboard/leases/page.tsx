@@ -92,6 +92,8 @@ async function getTenantName(tenantId: string): Promise<string> {
 
 // Leases list component
 async function LeasesList() {
+  await new Promise((resolve) => setTimeout(resolve, 1300))
+  
   const leases = await getLeases()
   const tenants = await getTenants()
 
