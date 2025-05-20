@@ -1,17 +1,34 @@
 // Re-export all data functions
-export { getProperties, getPropertyById, getPropertyStats } from "./properties"
-export { getUnits, getUnitById, getUnitsByPropertyId, getUnitStats } from "./units"
-export { getTenants, getTenantById, getTenantsByPropertyId, getTenantStats } from "./tenants"
-export { getLeases, getLeaseById, getLeasesByPropertyId, getLeaseByTenantId, getLeaseStats } from "./leases"
-export { getPayments, getPaymentById, getPaymentsByTenantId, getPaymentStats } from "./payments"
-export {
-  getMaintenanceRequests,
-  getMaintenanceRequestById,
-  getMaintenanceRequestsByPropertyId,
-  getMaintenanceRequestsByTenantId,
-  getMaintenanceStats,
-} from "./maintenance"
-export { getUsers, getUserById, getUsersByRole, getUsersByStatus, getUserStats } from "./users"
+export * from "./types"
+export * from "./properties"
+export * from "./units"
+export * from "./tenants"
+export * from "./leases"
+export * from "./payments"
+export * from "./maintenance"
+export * from "./users"
+
+// Import functions for backward compatibility
+import { getPropertyById } from "./properties"
+import { getUnitsByPropertyId } from "./units"
+import { getTenantsByPropertyId } from "./tenants"
+import { getLeasesByPropertyId, getLeaseByTenantId } from "./leases"
+import { getMaintenanceRequestsByPropertyId, getMaintenanceRequestsByTenantId } from "./maintenance"
+import { getTenantById } from "./tenants"
+import { getUnitById } from "./units"
+import { getPaymentsByTenantId } from "./payments"
+
+// Alias exports for backward compatibility
+export const loadPropertyById = getPropertyById
+export const loadUnitsByPropertyId = getUnitsByPropertyId
+export const loadTenantsByPropertyId = getTenantsByPropertyId
+export const loadLeasesByPropertyId = getLeasesByPropertyId
+export const loadMaintenanceRequestsByPropertyId = getMaintenanceRequestsByPropertyId
+export const loadTenantById = getTenantById
+export const loadUnitById = getUnitById
+export const loadLeaseByTenantId = getLeaseByTenantId
+export const loadPaymentsByTenantId = getPaymentsByTenantId
+export const loadMaintenanceRequestsByTenantId = getMaintenanceRequestsByTenantId
 
 // Dashboard stats
 import { getPropertyStats } from "./properties"
