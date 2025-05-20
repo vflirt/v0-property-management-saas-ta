@@ -23,11 +23,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-export const metadata: Metadata = {
-  title: "Tenants | Property Management SaaS",
-  description: "Manage your tenants",
-}
-
 // Loading component for tenants
 function TenantsLoading() {
   return (
