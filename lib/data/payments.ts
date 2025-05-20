@@ -5,7 +5,7 @@ const payments: Payment[] = [
   {
     id: "payment-001",
     tenantId: "tenant-001",
-    leaseId: "lease-001"
+    leaseId: "lease-001",
     unitId: "unit-001",
     amount: 1500,
     type: "rent",
